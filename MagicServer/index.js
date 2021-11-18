@@ -286,11 +286,13 @@ app.get("/api/counter/stateOn", (req, res) => {
         });
 })
 
-
 // Device endpoint
 app.get("/api/counter/stateOff", (req, res) => {
     try
     {
+        var d = new Date();
+        var hour = d.getHours();
+
         const device = devices.find(element => element.id === counterLEDId);
 
         if (device === undefined) 
@@ -305,8 +307,15 @@ app.get("/api/counter/stateOff", (req, res) => {
 
         console.log("returning to old state");
 
-        promises.push(ctrl.setColorWithBrightness(cacheState.color.red, cacheState.color.green, cacheState.color.blue, 100));
-        promises.push(ctrl.setPower(cacheState.on));
+        if (hour >= 19 && hour <= 23)
+        {
+            promises.push(ctrl.setColorWithBrightness(255, 0, 153, 100));
+        }
+        else // power off
+        {
+            promises.push(ctrl.setColorWithBrightness(255, 0, 153, 100));
+            promises.push(ctrl.setPower(false));
+        }
 
         Promise.all(promises).then(() => res.sendStatus('200')).catch(err => res.status(500).send(err.message));
     }
