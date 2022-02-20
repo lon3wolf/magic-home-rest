@@ -29,7 +29,7 @@ const scanDevices = () => {
         return;
     }
 
-    const ctrl = new Control(device.address, { wait_for_reply: false});
+    const ctrl = new Control(device.address, { wait_for_reply: true});
 
     ctrl.queryState()
         .then(state => console.info(state))
@@ -296,7 +296,7 @@ app.get("/api/counter/stateOn", (req, res) => {
         return;
     }
 
-    const ctrl = new Control(device.address, { wait_for_reply: false});
+    const ctrl = new Control(device.address, { wait_for_reply: true});
     ctrl.queryState().then(state => 
         {
             cacheState = state;
@@ -323,7 +323,7 @@ app.get("/api/counter/stateOff", (req, res) => {
             return;
         }
 
-        const ctrl = new Control(device.address, { wait_for_reply: false});
+        const ctrl = new Control(device.address, { wait_for_reply: true});
 
         const promises = [];
 
