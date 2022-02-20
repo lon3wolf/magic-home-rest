@@ -299,7 +299,7 @@ app.get("/api/counter/stateOn", (req, res) => {
 
     if (device === undefined) 
     {
-        res.status(500).send(`No device with id ${id} was found`);
+        res.status(500).send(`No device with id ${counterLEDId} was found`);
         return;
     }
 
