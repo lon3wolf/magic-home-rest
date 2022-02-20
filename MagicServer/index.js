@@ -28,9 +28,15 @@ const scanDevices = () => {
         console.error(`No device with id ${counterLEDId} was found`);
         return;
     }
+    else
+    {
+        console.log("Device - Counter found");
+    }
 
     const ctrl = new Control(device.address, { wait_for_reply: true});
 
+    console.log("Checking device state");
+    
     ctrl.queryState()
         .then(state => console.info(state))
         .catch(err => console.error(err));
@@ -40,6 +46,7 @@ const scanDevices = () => {
 
     if (hour >= 13 && hour <= 23)
     {
+        console.log("Attempting eve task!");
         const promises = [];
         promises.push(ctrl.setPower(true));
         promises.push(ctrl.setColorWithBrightness(255, 0, 153, 100));
