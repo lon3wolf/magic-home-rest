@@ -44,13 +44,20 @@ const scanDevices = () => {
     var d = new Date();
     var hour = d.getHours();
 
-    if (hour >= 13 && hour <= 23)
+    if (hour >= 19 && hour <= 23)
     {
         console.log("Attempting eve task!");
         const promises = [];
         promises.push(ctrl.setPower(true));
         promises.push(ctrl.setColorWithBrightness(255, 0, 153, 100));
         Promise.all(promises).then(() => console.log("Eve task started")).catch(err => console.error("Eve task failed"));
+    } 
+    else
+    {
+        console.log("Turning off eve task!");
+        const promises = [];
+        promises.push(ctrl.setPower(false));
+        Promise.all(promises).then(() => console.log("Eve task off")).catch(err => console.error("Eve task off failed"));
     }
 }
 
