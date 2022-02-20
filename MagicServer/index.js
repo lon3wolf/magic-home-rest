@@ -42,7 +42,7 @@ const scanDevices = () => {
     {
         const promises = [];
         promises.push(ctrl.setColorWithBrightness(255, 0, 153, 100));
-        Promise.all(promises).then(() => res.sendStatus('200')).catch(err => res.status(500).send(err.message));
+        Promise.all(promises).then(() => console.log("Eve task started")).catch(err => console.error("Eve task failed"));
     }
 }
 
