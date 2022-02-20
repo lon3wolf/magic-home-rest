@@ -19,7 +19,31 @@ const scanDevices = () => {
         devices.forEach(element => {
             console.log(element);
         });
-    })
+    });
+
+    const device = devices.find(element => element.id === counterLEDId);
+    
+    if (device === undefined) 
+    {
+        console.error(`No device with id ${counterLEDId} was found`);
+        return;
+    }
+
+    ctrl = new Control(device.address);
+
+    ctrl.queryState()
+        .then(state => console.info(state))
+        .catch(err => console.error(err));
+
+    var d = new Date();
+    var hour = d.getHours();
+
+    if (hour >= 13 && hour <= 23)
+    {
+        const promises = [];
+        promises.push(ctrl.setColorWithBrightness(255, 0, 153, 100));
+        Promise.all(promises).then(() => res.sendStatus('200')).catch(err => res.status(500).send(err.message));
+    }
 }
 
 const getDevices = (id, address) => {
@@ -53,16 +77,13 @@ const hexToRgb = (hex) => {
 }
 
 // Scan devices and set interval to scan every minute
-
 scanDevices();
 setInterval(scanDevices, 60000);
 
 // Express
-
 const app = express();
 
 // Middleware
-
 app.use(bodyParser.json());
 app.use((err, req, res, next) => {
 
@@ -297,7 +318,7 @@ app.get("/api/counter/stateOff", (req, res) => {
 
         if (device === undefined) 
         {
-            res.status(500).send(`No device with id ${id} was found`);
+            res.status(500).send(`No device with id ${counterLEDId} was found`);
             return;
         }
 
