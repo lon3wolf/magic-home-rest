@@ -2,7 +2,7 @@ const { Control, Discovery } = require('magic-home');
 const express = require("express");
 const bodyParser = require('body-parser');
 
-const PORT = process.env.PORT || 800;
+const PORT = process.env.PORT || 300;
 
 let devices = [];
 
