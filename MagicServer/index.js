@@ -41,6 +41,7 @@ const scanDevices = () => {
     if (hour >= 13 && hour <= 23)
     {
         const promises = [];
+        promises.push(ctrl.setPower(true));
         promises.push(ctrl.setColorWithBrightness(255, 0, 153, 100));
         Promise.all(promises).then(() => console.log("Eve task started")).catch(err => console.error("Eve task failed"));
     }
